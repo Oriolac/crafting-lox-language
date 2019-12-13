@@ -79,16 +79,16 @@ public class Scanner {
             case ' ':
             case '\r':
             case '\t':
-                // Ignore whitespace.
+                // Ignore whitespaces.
                 break;
             case '\n':
                 line++;
                 break;
-            case 'o':
+            /*case 'o':
                 if (peek() == 'r') {
-                    addToken(OR);
+                    identifier();
                 }
-                break;
+                break;*/
             default:
                 if (isDigit(c)) {
                     number();
@@ -97,7 +97,6 @@ public class Scanner {
                 } else {
                     Lox.error(line, "Unexpected character.");
                 }
-                Lox.error(line, "Unexpected character");
                 break;
         }
     }

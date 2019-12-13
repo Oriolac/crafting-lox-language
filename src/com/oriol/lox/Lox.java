@@ -12,13 +12,27 @@ import java.util.List;
 public class Lox {
 
     static boolean hadError = false;
+    static boolean debug = false;
 
     public static void main(String[] args) throws IOException {
-        if (args.length > 1) {
-            System.out.println("Usage: jlox [script]");
+        if (args.length > 2) {
+            System.out.println("Usage: jlox [script] [-d]");
             System.exit(64);
         } else if (args.length == 1) {
-            runFile(args[0]);
+            if (args[0].equals("-d")) {
+                debug = true;
+                runPrompt();
+            } else {
+                runFile(args[0]);
+            }
+        } else if (args.length == 2) {
+            if (args[0].equals("-d")) {
+                debug = true;
+                runFile(args[1]);
+            } else {
+                debug = true;
+                runFile(args[0]);
+            }
         } else {
             runPrompt();
         }
@@ -45,10 +59,8 @@ public class Lox {
     private static void run(String source){
         Scanner scanner = new Scanner(source);
         List<Token> tokens = scanner.scanTokens();
-
-        for (Token token : tokens) {
-            System.out.println(token);
-        }
+        if (debug)
+            tokens.forEach(System.out::println);
     }
 
     static void error(int line, String message) {
